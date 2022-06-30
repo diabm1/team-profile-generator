@@ -1,4 +1,4 @@
-const Engineer = require("../lib/Engineer");
+import Engineer from "../lib/Engineer";
 
 //checking added github property in inherited class
 test("Can setup a github account via constructor", () => {

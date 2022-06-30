@@ -199,7 +199,7 @@ const addIntern = () => {
 let team = "";
 
 addManager().then((answers) => {
-  console.log(answers);
+  //   console.log(answers);
   // Create a new manager object with the answers
   const manager = new Manager(
     answers.name,

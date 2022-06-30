@@ -1,4 +1,4 @@
-const Manager = require("../lib/Manager");
+import Manager from "../lib/Manager";
 const manager = new Manager("tim", "234557", "timandy35@gmail.com", "3021");
 
 test("should receive constructor values", () => {
