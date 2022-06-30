@@ -1,10 +1,28 @@
 {
-  "dependencies": {
-    "inquirer": "^9.0.0",
-    "jest": "^28.1.1"
+  "name": "team-profile-generator",
+  "version": "1.0.0",
+  "description": "You have to be test folder in order to run test. I installed npm packages in root directory.",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
   },
   "scripts": {
-    "test": "jest"
-  }
-  
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/diabm1/team-profile-generator.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/diabm1/team-profile-generator/issues"
+  },
+  "homepage": "https://github.com/diabm1/team-profile-generator#readme",
+  "dependencies": {
+    "inquirer": "^9.0.0",
+    "jest": "^28.1.2"
+  },
+  "type": "module"
 }
