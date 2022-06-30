@@ -43,65 +43,97 @@ const addManager = () => {
       type: "input",
       name: "email",
       message: "Please enter the manager's email:",
-      //   validate: (input) => {},
+      validate: (input) => {
+        const valid = input.match(/\S+@\S+\.\S+/);
+        if (valid) {
+          return true;
+        }
+        return "Please enter a valid email!";
+      },
     },
     {
       type: "input",
       name: "officeNumber",
       message: "Please enter the manager's office number:",
-      //   validate: (input) => {},
+      validate: (input) => {
+        const valid = input.match(/^[0-9]\d*$/);
+        if (valid) {
+          return true;
+        }
+        return "Please enter a valid office number";
+      },
     },
   ]);
 };
 
 const addEngineer = () => {
-  return inquirer.prompt([
-    {
-      type: "input",
-      name: "name",
-      message: "What is the engineer's name?",
-      validate: (input) => {
-        if (input) {
-          return true;
-        }
-        console.log("Please input a name!");
-        return false;
-      },
-    },
-    {
-      type: "input",
-      name: "id",
-      message: "Please enter the engineer id: ",
-      validate: (input) => {
-        if (isNaN(input)) {
-          console.log("Please enter the right id!");
+  return inquirer
+    .prompt([
+      {
+        type: "input",
+        name: "name",
+        message: "What is the engineer's name?",
+        validate: (input) => {
+          if (input) {
+            return true;
+          }
+          console.log("Please input a name!");
           return false;
-        }
-        return true;
+        },
       },
-    },
-    {
-      type: "input",
-      name: "email",
-      message: "Please enter the engineer's email:",
-      //   validate: (input) => {},
-    },
-    {
-      type: "input",
-      name: "githubUsername",
-      message: "Please enter the engineer's github username:",
-      //   validate: (input) => {},
-    },
-  ]).then((answers) => {
-    const engineer = new Engineer(answers.name, answers.id, answers.email, answers.githubUsername)
-    const html = generateEngineer(engineer);
-    team += html
-    createTeam();
-  });
+      {
+        type: "input",
+        name: "id",
+        message: "Please enter the engineer id: ",
+        validate: (input) => {
+          if (isNaN(input)) {
+            console.log("Please enter the right id!");
+            return false;
+          }
+          return true;
+        },
+      },
+      {
+        type: "input",
+        name: "email",
+        message: "Please enter the engineer's email:",
+        validate: (input) => {
+          const valid = input.match(/\S+@\S+\.\S+/);
+          if (valid) {
+            return true;
+          }
+          return "Please enter a valid email!";
+        },
+      },
+      {
+        type: "input",
+        name: "githubUsername",
+        message: "Please enter the engineer's github username:",
+        validate: (input) => {
+          if (input !== "") {
+            return true;
+          } else {
+            console.log("Please enter valid github username!");
+          }
+        },
+      },
+    ])
+    .then((answers) => {
+      const engineer = new Engineer(
+        answers.name,
+        answers.id,
+        answers.email,
+        answers.githubUsername
+      );
+      const html = generateEngineer(engineer);
+      team += html;
+      createTeam();
+    });
 };
 
 const addIntern = () => {
-    return inquirer.prompt([
+  return inquirer
+    .prompt([
       {
         type: "input",
         name: "name",
@@ -130,21 +162,39 @@ const addIntern = () => {
         type: "input",
         name: "email",
         message: "Please enter the intern's email:",
-        //   validate: (input) => {},
+        validate: (input) => {
+          const valid = input.match(/\S+@\S+\.\S+/);
+          if (valid) {
+            return true;
+          }
+          return "Please enter a valid email!";
+        },
       },
       {
         type: "input",
         name: "school",
         message: "Please enter the intern's school:",
-        //   validate: (input) => {},
+        validate: (input) => {
+          if (input !== "") {
+            return true;
+          } else {
+            console.log("Please enter valid school name!");
+          }
+        },
       },
-    ]).then((answers) => {
-        const intern = new Intern(answers.name, answers.id, answers.email, answers.school)
-        const html = generateIntern(intern);
-        team += html
-        createTeam();
-      });
-  };
+    ])
+    .then((answers) => {
+      const intern = new Intern(
+        answers.name,
+        answers.id,
+        answers.email,
+        answers.school
+      );
+      const html = generateIntern(intern);
+      team += html;
+      createTeam();
+    });
+};
 
 let team = "";
 
@@ -161,38 +211,36 @@ addManager().then((answers) => {
   const html = generateManager(manager);
   team += html;
 
-createTeam()
-
-  
-
-  //   console.log(html)
+  createTeam();
 });
 
 const createTeam = () => {
-  return inquirer.prompt([
-    {
-      type: "list",
-      name: "choice",
-      message: "Which team member would you like to add",
-      choices: ["Engineer", "Intern", "exit"],
-    },
-  ]).then((answers) => {
-    console.log(answers);
-    if (answers.choice === "Engineer") {
-      addEngineer()
-    }
-    if (answers.choice === "Intern") {
-      addIntern()
-    }
-    if (answers.choice === "exit") {
-      const html = generateHTML(team);
-      fs.writeFile("./dist/index.html", html, (err) => {
-        if(err){
-            console.log(err)
-        } else {
-            console.log("file created successfully!")
-        }
-      })
-    }
-  })
+  return inquirer
+    .prompt([
+      {
+        type: "list",
+        name: "choice",
+        message: "Which team member would you like to add",
+        choices: ["Engineer", "Intern", "exit"],
+      },
+    ])
+    .then((answers) => {
+      console.log(answers);
+      if (answers.choice === "Engineer") {
+        addEngineer();
+      }
+      if (answers.choice === "Intern") {
+        addIntern();
+      }
+      if (answers.choice === "exit") {
+        const html = generateHTML(team);
+        fs.writeFile("./dist/index.html", html, (err) => {
+          if (err) {
+            console.log(err);
+          } else {
+            console.log("file created successfully!");
+          }
+        });
+      }
+    });
 };
